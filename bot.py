@@ -4,12 +4,12 @@ from aiogram import Bot, Dispatcher, types, F
 from aiogram.filters import Command
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
-# Получаем токен из переменных окружения
+# РџРѕР»СѓС‡Р°РµРј С‚РѕРєРµРЅ РёР· РїРµСЂРµРјРµРЅРЅС‹С… РѕРєСЂСѓР¶РµРЅРёСЏ
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 if not BOT_TOKEN:
     raise RuntimeError("BOT_TOKEN not set in environment variables")
 
-# Хранилище штампов (пока в RAM)
+# РҐСЂР°РЅРёР»РёС‰Рµ С€С‚Р°РјРїРѕРІ (РїРѕРєР° РІ RAM)
 user_data = {}
 
 bot = Bot(token=BOT_TOKEN)
@@ -18,9 +18,9 @@ dp = Dispatcher()
 
 def main_keyboard():
     kb = [
-        [InlineKeyboardButton(text="Мои штампы ??", callback_data="stamps")],
-        [InlineKeyboardButton(text="Добавить штамп ?", callback_data="add")],
-        [InlineKeyboardButton(text="Использовать бесплатный кофе ??", callback_data="use")]
+        [InlineKeyboardButton(text="РњРѕРё С€С‚Р°РјРїС‹ в•пёЏ", callback_data="stamps")],
+        [InlineKeyboardButton(text="Р”РѕР±Р°РІРёС‚СЊ С€С‚Р°РјРї вћ•", callback_data="add")],
+        [InlineKeyboardButton(text="РСЃРїРѕР»СЊР·РѕРІР°С‚СЊ Р±РµСЃРїР»Р°С‚РЅС‹Р№ РєРѕС„Рµ рџЋ‰", callback_data="use")]
     ]
     return InlineKeyboardMarkup(inline_keyboard=kb)
 
@@ -33,16 +33,16 @@ async def start(message: types.Message):
         user_data[user_id] = 0
 
     welcome_text = (
-        "?? *Добро пожаловать в MollyCaffee!* \n\n"
-        "Мы рады видеть вас в нашей программе лояльности.\n\n"
-        "Как это работает:\n"
-        "• За каждый купленный кофе вы получаете *1 штамп*.\n"
-        "• Когда вы собираете *10 штампов*, вы получаете *бесплатный кофе* ??\n"
-        "• Следить за прогрессом, добавлять штампы и активировать бесплатный кофе можно прямо в этом боте.\n\n"
-        "Ниже — меню управления вашими штампами ??"
+        "в•пёЏ *Р”РѕР±СЂРѕ РїРѕР¶Р°Р»РѕРІР°С‚СЊ РІ MollyCaffee!* \n\n"
+        "РњС‹ СЂР°РґС‹ РІРёРґРµС‚СЊ РІР°СЃ РІ РЅР°С€РµР№ РїСЂРѕРіСЂР°РјРјРµ Р»РѕСЏР»СЊРЅРѕСЃС‚Рё.\n\n"
+        "РљР°Рє СЌС‚Рѕ СЂР°Р±РѕС‚Р°РµС‚:\n"
+        "вЂў Р—Р° РєР°Р¶РґС‹Р№ РєСѓРїР»РµРЅРЅС‹Р№ РєРѕС„Рµ РІС‹ РїРѕР»СѓС‡Р°РµС‚Рµ *1 С€С‚Р°РјРї*.\n"
+        "вЂў РљРѕРіРґР° РІС‹ СЃРѕР±РёСЂР°РµС‚Рµ *10 С€С‚Р°РјРїРѕРІ*, РІС‹ РїРѕР»СѓС‡Р°РµС‚Рµ *Р±РµСЃРїР»Р°С‚РЅС‹Р№ РєРѕС„Рµ* рџЋ‰\n"
+        "вЂў РЎР»РµРґРёС‚СЊ Р·Р° РїСЂРѕРіСЂРµСЃСЃРѕРј, РґРѕР±Р°РІР»СЏС‚СЊ С€С‚Р°РјРїС‹ Рё Р°РєС‚РёРІРёСЂРѕРІР°С‚СЊ Р±РµСЃРїР»Р°С‚РЅС‹Р№ РєРѕС„Рµ РјРѕР¶РЅРѕ РїСЂСЏРјРѕ РІ СЌС‚РѕРј Р±РѕС‚Рµ.\n\n"
+        "РќРёР¶Рµ вЂ” РјРµРЅСЋ СѓРїСЂР°РІР»РµРЅРёСЏ РІР°С€РёРјРё С€С‚Р°РјРїР°РјРё в¬‡пёЏ"
     )
 
-    # используем Markdown-style (aiogram auto форматирования)
+    # РёСЃРїРѕР»СЊР·СѓРµРј Markdown-style (aiogram auto С„РѕСЂРјР°С‚РёСЂРѕРІР°РЅРёСЏ)
     await message.answer(welcome_text, reply_markup=main_keyboard())
 
 
@@ -51,21 +51,21 @@ async def show_stamps(callback: types.CallbackQuery):
     user_id = callback.from_user.id
     stamps = user_data.get(user_id, 0)
 
-    bar = "".join(["??" if i < stamps else "??" for i in range(10)])
+    bar = "".join(["рџџ¤" if i < stamps else "вљЄпёЏ" for i in range(10)])
 
     if stamps < 10:
         text = (
-            f"Ваши штампы: {stamps}/10\n\n"
+            f"Р’Р°С€Рё С€С‚Р°РјРїС‹: {stamps}/10\n\n"
             f"{bar}\n\n"
-            f"Ещё {10 - stamps} шт. до бесплатного кофе! ??"
+            f"Р•С‰С‘ {10 - stamps} С€С‚. РґРѕ Р±РµСЃРїР»Р°С‚РЅРѕРіРѕ РєРѕС„Рµ! в•пёЏ"
         )
     else:
         text = (
-            "?? У вас уже 10 штампов!\n"
-            "Вы можете получить бесплатный кофе."
+            "рџЋ‰ РЈ РІР°СЃ СѓР¶Рµ 10 С€С‚Р°РјРїРѕРІ!\n"
+            "Р’С‹ РјРѕР¶РµС‚Рµ РїРѕР»СѓС‡РёС‚СЊ Р±РµСЃРїР»Р°С‚РЅС‹Р№ РєРѕС„Рµ."
         )
 
-    # edit_text безопасно, но сначала проверим есть ли сообщение
+    # edit_text Р±РµР·РѕРїР°СЃРЅРѕ, РЅРѕ СЃРЅР°С‡Р°Р»Р° РїСЂРѕРІРµСЂРёРј РµСЃС‚СЊ Р»Рё СЃРѕРѕР±С‰РµРЅРёРµ
     try:
         await callback.message.edit_text(text, reply_markup=main_keyboard())
     except Exception:
@@ -79,11 +79,11 @@ async def add_stamp(callback: types.CallbackQuery):
     stamps = user_data.get(user_id, 0)
 
     if stamps >= 10:
-        await callback.answer("У вас уже есть бесплатный кофе ??", show_alert=True)
+        await callback.answer("РЈ РІР°СЃ СѓР¶Рµ РµСЃС‚СЊ Р±РµСЃРїР»Р°С‚РЅС‹Р№ РєРѕС„Рµ рџЋ‰", show_alert=True)
         return
 
     user_data[user_id] = stamps + 1
-    await callback.answer("Штамп добавлен! ??")
+    await callback.answer("РЁС‚Р°РјРї РґРѕР±Р°РІР»РµРЅ! в•пёЏ")
     await show_stamps(callback)
 
 
@@ -93,11 +93,11 @@ async def use_free_coffee(callback: types.CallbackQuery):
     stamps = user_data.get(user_id, 0)
 
     if stamps < 10:
-        await callback.answer("У вас нет бесплатного кофе ??", show_alert=True)
+        await callback.answer("РЈ РІР°СЃ РЅРµС‚ Р±РµСЃРїР»Р°С‚РЅРѕРіРѕ РєРѕС„Рµ рџ‘Ђ", show_alert=True)
         return
 
     user_data[user_id] = 0
-    await callback.answer("Бесплатный кофе использован ??")
+    await callback.answer("Р‘РµСЃРїР»Р°С‚РЅС‹Р№ РєРѕС„Рµ РёСЃРїРѕР»СЊР·РѕРІР°РЅ рџЋ‰")
     await show_stamps(callback)
 
 
